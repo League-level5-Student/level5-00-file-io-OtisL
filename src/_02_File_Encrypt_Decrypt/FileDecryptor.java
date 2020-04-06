@@ -1,5 +1,12 @@
 package _02_File_Encrypt_Decrypt;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import javax.swing.JOptionPane;
+
 public class FileDecryptor {
 	/*
 	 * Decryption is the process of taking encoded or encrypted text or other data
@@ -19,4 +26,23 @@ public class FileDecryptor {
 	 * Create a program that opens the file created by FileEncryptor and decrypts
 	 * the message, then display it to the user in a JOptionPane.
 	 */
+	public static void main(String[] args) {
+		String line = "";
+		int key = Integer.parseInt(JOptionPane.showInputDialog("Please put in your key (numbers only)"));
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("src/_02_File_Encrypt_Decrypt/testing.txt"));
+			line=line+br.readLine();	
+			br.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String decrypted = "";
+		for(int i=0; i<line.length(); i++){
+			Character c = line.charAt(i);
+			c=(char)(c-key);
+			decrypted=decrypted+c;
+		}
+		JOptionPane.showMessageDialog(null, decrypted);
+	}
 }

@@ -1,5 +1,10 @@
 package _02_File_Encrypt_Decrypt;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
+import javax.swing.JOptionPane;
+
 public class FileEncryptor {
 	/*
 	 * Encryption is the process of encoding a message or information
@@ -20,4 +25,21 @@ public class FileEncryptor {
 	 * Create a program that takes a message and a key from the user.
 	 * Use the key to shift each letter in the users input and save the final result to a file.
 	 */
+	public static void main(String[] args) {
+		String toEncrypt = JOptionPane.showInputDialog("Please enter the message you want to be encrypted");
+		int key = Integer.parseInt(JOptionPane.showInputDialog("Please put in your key (numbers LESS THAN 5 only)"));
+		String encrypted = "";
+		for(int i=0; i<toEncrypt.length(); i++){
+			Character c = toEncrypt.charAt(i);
+			c=(char)(c+key);
+			encrypted=encrypted+c;
+		}
+		try {
+			FileWriter fw = new FileWriter("src/_02_File_Encrypt_Decrypt/testing.txt");
+			fw.write(encrypted);
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
