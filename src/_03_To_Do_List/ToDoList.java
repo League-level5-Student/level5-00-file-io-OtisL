@@ -2,6 +2,9 @@ package _03_To_Do_List;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,13 +84,47 @@ public class ToDoList implements ActionListener {
 			int remove = Integer.parseInt(JOptionPane.showInputDialog("Which task number do you want to remove? (task numbers can be found in list)"));
 			stuff.remove(remove - 1);
 		} else if (e.getSource() == view) {
-			if (stuff == null) {
+			if (stuff.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "There is nothing in your list. Try adding something!",	"Nothing in List!", JOptionPane.ERROR_MESSAGE);
 			} else {
 				String list = "List:\n";
 				for (int i = 0; i < stuff.size(); i++) {
 					list = list + (i + 1) + ". " + stuff.get(i) + "\n";
 				}
+				JOptionPane.showMessageDialog(null, list);
+			}
+		}else if (e.getSource() == save) {
+			String name = JOptionPane.showInputDialog("What will the file name be? If the name is the same as a pre-existing file it will be overwritten. No spaces.");
+			String list = "";
+			for (int i = 0; i < stuff.size(); i++) {
+				list = list + stuff.get(i) + "\n";
+			}
+			try {
+				FileWriter fw = new FileWriter("src/_03_To_Do_List/"+name+".txt");
+				fw.write(list);
+				fw.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}else if (e.getSource() == load) {
+			String name = JOptionPane.showInputDialog("What is the file name you want to load?");
+			stuff.clear();
+			try {
+				BufferedReader br = new BufferedReader(new FileReader("src/_03_To_Do_List/"+name+".txt"));
+				
+				String line = br.readLine();
+				while(line != null){
+					stuff.add(line);
+					line = br.readLine();
+				}
+				
+				br.close();
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
 			}
 		}
 
