@@ -60,7 +60,8 @@ public class GridInputPanel extends JPanel{
 		}
 		
 		if(valid) {
-			pam.submitGridData(w, h, r, c);
+			GridPanel gp = new GridPanel(w, h, r, c);
+			pam.submitGridData(gp);
 		}
 	}
 	

@@ -25,29 +25,30 @@ public class PixelArtMaker implements MouseListener, ActionListener{
 	JButton button;
 	private static final String DATA_FILE = "src/_05_Pixel_Art_Save_State/saved.dat";
 	public void start() {
-		gip = new GridInputPanel(this);	
+		//gip = new GridInputPanel(this);	
 		window = new JFrame("Pixel Art");
 		window.setLayout(new FlowLayout());
 		window.setResizable(false);
 		
-		window.add(gip);
+		//window.add(gip);
 		window.pack();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setVisible(true);
+		submitGridData(load());
 	}
 
-	public void submitGridData(int w, int h, int r, int c) {
-		gp = new GridPanel(w, h, r, c);
+	public void submitGridData(GridPanel gridPanel) {
+		gp = gridPanel;
 		csp = new ColorSelectionPanel();
 		button = new JButton("Save");
 		button.addActionListener(this);
-		window.remove(gip);
+		//window.remove(gip);
 		window.add(gp);
 		window.add(csp);
 		window.add(button);
 		gp.repaint();
 		gp.addMouseListener(this);
 		window.pack();
+		window.setVisible(true);
 	}
 	
 	public static void main(String[] args) {
